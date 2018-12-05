@@ -5,16 +5,40 @@ import time
 import copy
 import torch
 from torch import nn
-from gan_training import utils
-from gan_training.train import Trainer, update_average
-from gan_training.logger import Logger
-from gan_training.checkpoints import CheckpointIO
-from gan_training.inputs import get_dataset
-from gan_training.distributions import get_ydist, get_zdist
-from gan_training.eval import Evaluator
-from gan_training.config import (
+
+from .gan_training import utils
+from .gan_training.train import Trainer, update_average
+from .gan_training.logger import Logger
+from .gan_training.checkpoints import CheckpointIO
+from .gan_training.inputs import get_dataset
+from .gan_training.distributions import get_ydist, get_zdist
+from .gan_training.eval import Evaluator
+from .gan_training.config import (
     load_config, build_models, build_optimizers, build_lr_scheduler,
 )
+
+
+print("Cur work dir")
+print(os.getcwd())
+
+startpath = os.path.dirname(os.path.realpath(__file__))
+print("Path:")
+print(os.path.dirname(startpath))
+
+
+with open('/job/lib/GAN_stability/120.yaml', 'r') as fin:
+    print(fin.read())
+
+#for root, dirs, files in os.walk(startpath):
+#    level = root.replace(startpath, '').count(os.sep)
+#    indent = ' ' * 4 * (level)
+#    print('{}{}/'.format(indent, os.path.basename(root)))
+#    subindent = ' ' * 4 * (level + 1)
+#    for f in files:
+#        print('{}{}'.format(subindent, f))
+
+
+
 
 # Arguments
 parser = argparse.ArgumentParser(
@@ -64,8 +88,8 @@ train_dataset, nlabels = get_dataset(
 train_loader = torch.utils.data.DataLoader(
         train_dataset,
         batch_size=batch_size,
-        num_workers=config['training']['nworkers'],
-        shuffle=True, pin_memory=True, sampler=None, drop_last=True
+      #  num_workers=config['training']['nworkers'],
+        shuffle=True, pin_memory=False, sampler=None, drop_last=True
 )
 
 # Number of labels

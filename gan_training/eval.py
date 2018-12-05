@@ -1,6 +1,5 @@
 import torch
-from gan_training.metrics import inception_score
-
+from  GAN_stability.gan_training.metrics import inception_score
 
 class Evaluator(object):
     def __init__(self, generator, zdist, ydist, batch_size=64,
